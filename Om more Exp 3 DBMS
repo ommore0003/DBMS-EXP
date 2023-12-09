@@ -1,0 +1,69 @@
+mysql> -- Create Database
+mysql> CREATE DATABASE LibraryDatabase;
+Query OK, 1 row affected (0.16 sec)
+
+mysql> -- Use Database
+mysql> USE LibraryDatabase;
+Database changed
+mysql> -- Create Authors Table
+mysql> CREATE TABLE Authors (
+    ->     AuthorID INT PRIMARY KEY,
+    ->     AuthorName VARCHAR(100)
+    -> );
+Query OK, 0 rows affected (0.81 sec)
+
+mysql> 
+mysql> -- Create Books Table
+mysql> CREATE TABLE Books (
+    ->     BookID INT PRIMARY KEY,
+    ->     Title VARCHAR(255),
+    ->     AuthorID INT,
+    ->     PublishYear INT,
+    ->     FOREIGN KEY (AuthorID) REFERENCES Authors(AuthorID)
+    -> );
+Query OK, 0 rows affected (1.14 sec)
+
+
+mysql> ALTER TABLE Authors MODIFY COLUMN AuthorName VARCHAR(150);
+Query OK, 0 rows affected (0.21 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> -- Drop the column PublishYear from the Books table
+mysql> ALTER TABLE Books
+    -> DROP COLUMN PublishYear;
+Query OK, 0 rows affected (0.34 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> -- Add a foreign key constraint to the Books table referencing the AuthorID in the Authors table
+mysql> ALTER TABLE Books
+    -> ADD CONSTRAINT FK_Author
+    -> FOREIGN KEY (AuthorID)
+    -> REFERENCES Authors(AuthorID);
+Query OK, 4 rows affected (2.54 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> -- Add a foreign key constraint to the Books table referencing the AuthorID in the Authors table
+mysql> ALTER TABLE Books
+    -> ADD CONSTRAINT FK_Author
+    -> FOREIGN KEY (AuthorID)
+    -> REFERENCES Authors(AuthorID);
+ERROR 1826 (HY000): Duplicate foreign key constraint name 'FK_Author'
+mysql> -- Rename the column AuthorName to FullName in the Authors table 
+mysql> ALTER TABLE Authors
+    -> RENAME COLUMN AuthorName TO FullName;
+Query OK, 0 rows affected (0.41 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> -- Change the data type of PublishYear column in the Books table from INT to VARCHAR(4)
+mysql> ALTER TABLE Books
+    -> ALTER COLUMN PublishYear VARCHAR(4);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'VARCHAR(4)' at line 2
+mysql> -- Add a new column, BirthYear, to the Authors table
+mysql> ALTER TABLE Authors
+    -> ADD COLUMN BirthYear INT;
+Query OK, 0 rows affected (0.37 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> 
+
+
